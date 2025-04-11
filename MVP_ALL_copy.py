@@ -264,7 +264,7 @@ def scrape_jobs(keyword, location, max_count=5):
                         print("✅ Reached max job count.")
                         break
                     seen_indices = set()
-                    paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}"
+                    paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
                     print(f"🌐 Visiting: {paged_url}")
                     page.goto(paged_url)
                     page.wait_for_timeout(10000)  # Wait for job list to load

@@ -41,8 +41,8 @@ USERNAME = "you@example.com"
 PASSWORD = "23ranjan"
 
 # Hardcoded filter keywords for job title & location
-FILTER_KEYWORDS = ["node", "python", "php", "java", "laravel", "django", "kafka", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
-LOCATIONS = ["Mumbai", "Bengaluru", "Gurugram"]
+FILTER_KEYWORDS = ["node", "python developer", "php developer", "java", "laravel", "django", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
+LOCATIONS = ["Bengaluru", "Gurugram"]
 
 def is_chrome_running(port=9222):
     """Check if Chrome with remote debugging is already running."""
@@ -303,7 +303,7 @@ def scrape_jobs(keyword, location, max_count=5):
                         break
 
                     seen_indices = set()
-                    paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}"
+                    paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
                     logger.info(f"🌐 Visiting: {paged_url}")
                     page.goto(paged_url)
                     page.wait_for_timeout(10000)  # Wait for job list to load
