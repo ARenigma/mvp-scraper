@@ -42,7 +42,7 @@ PASSWORD = "23ranjan"
 
 # Hardcoded filter keywords for job title & location
 FILTER_KEYWORDS = ["node", "python", "php", "java", "laravel", "django", "kafka", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
-LOCATIONS = ["Gurgaon", "Delhi", "Gurugram", "Noida"]
+LOCATIONS = ["Mumbai", "Bengaluru", "Gurugram"]
 
 def is_chrome_running(port=9222):
     """Check if Chrome with remote debugging is already running."""
@@ -80,9 +80,10 @@ def extract_href(locator, selector, default=""):
     except:
         return default
 
-def extract_job_details(page, keyword=""):
+def extract_job_details(page, location="", keyword=""):
     job_details = {
         "Job Title": "Not Specified",
+        "Job City": location,
         "Job Profile": keyword,
         "Company Name": "Not Specified",
         "Job Location": "Not Specified",
@@ -352,7 +353,7 @@ def scrape_jobs(keyword, location, max_count=5):
                             job_cards.nth(i).click()
                             page.wait_for_timeout(3000)
 
-                            job = extract_job_details(page, keyword)
+                            job = extract_job_details(page, location, keyword)
 
                             # 🔍 Match against FILTER_KEYWORDS list
                             job_title_text = job.get("Job Title", "").lower()
