@@ -229,7 +229,7 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
 
     if not scroll_selector:
         logger.critical("❌ Scroll container NOT found.")
-        return
+        return False  # Signal failure to the caller
 
     #print(f"✅ Using scroll container: {scroll_selector}")
 
@@ -271,10 +271,14 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
     else:
         logger.warning(f"⚠️ Max scrolls reached but only {total_cards} job cards found.")
 
+    return True  # signal success to the caller    
+
 def scrape_jobs(keyword, location, max_count=5):
     jobs = []
     start = 0  # pagination offset, increases by 25 for each page
     global_job_index = 1  # Global counter across pages
+    consecutive_empty_pages = 0  # Add this counter
+    max_empty_pages = 2  # After this many empty pages, move to next keyword
 
     launch_chrome_debug()  # ✅ THIS STARTS CHROME BEFORE CONNECTING TO CDP
 
@@ -291,6 +295,12 @@ def scrape_jobs(keyword, location, max_count=5):
                     if max_count is not None and len(jobs) >= max_count:
                         logger.info("✅ Reached max job count.")
                         break
+
+                     # Check if we've had too many empty pages in a row
+                    if consecutive_empty_pages >= max_empty_pages:
+                        logger.info(f"⚠️ Found {consecutive_empty_pages} empty pages in a row. Moving to next keyword-location.")
+                        break
+
                     seen_indices = set()
                     paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}"
                     logger.info(f"🌐 Visiting: {paged_url}")
@@ -299,10 +309,20 @@ def scrape_jobs(keyword, location, max_count=5):
 
                     scroll_job_list_panel(page, min_cards=25, delay=4)
 
+                    if not scroll_job_list_panel(page, min_cards=25, delay=4):
+                        # If scroll container not found, increment counter
+                        consecutive_empty_pages += 1
+                        start += 25
+                        continue
+
                     try:
                         page.wait_for_selector(".job-card-container--clickable", timeout=5000)
+                        # Found job cards - reset empty page counter
+                        consecutive_empty_pages = 0
+                        
                     except:
                         logger.warning("⚠️ Job cards not found after scroll, skipping page.")
+                        consecutive_empty_pages += 1
                         start += 25
                         continue
 
@@ -313,7 +333,9 @@ def scrape_jobs(keyword, location, max_count=5):
 
                     if total_cards == 0:
                         logger.warning("🚫 No more job cards found. Ending scrape.")
-                        break
+                        consecutive_empty_pages += 1
+                        start += 25
+                        continue
 
                     for i in range(total_cards):
                         if max_count is not None and len(jobs) >= max_count:
