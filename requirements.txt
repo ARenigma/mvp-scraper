@@ -1,0 +1,13 @@
+playwright
+tqdm
+python-dotenv
+schedule
+rich
+python-dateutil  # for datetime utilities
+csv23 # for improved CSV handling
+structlog
+logging  # though this is usually part of standard library
+playwright
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
