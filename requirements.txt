@@ -4,11 +4,13 @@ python-dotenv
 schedule
 rich
 loguru
+requests
 python-dateutil  # for datetime utilities
 csv23 # for improved CSV handling
 structlog
 logging  # though this is usually part of standard library
 google-api-python-client
+google-auth
 google-auth-httplib2
 google-auth-oauthlib
 gspread
