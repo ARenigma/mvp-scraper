@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 from tqdm import tqdm
 from datetime import datetime
-from upload_to_drive import upload_to_drive
+#from upload_to_drive import upload_to_drive
 import csv
 import os
 import time
@@ -519,4 +519,4 @@ if __name__ == "__main__":
 
 filename = save_jobs(all_jobs, filename)
 rename_file_complete(filename)
-upload_to_drive(filename)
+#upload_to_drive(filename)
