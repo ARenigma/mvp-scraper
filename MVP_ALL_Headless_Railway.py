@@ -43,8 +43,7 @@ structlog.configure(
 
 logger = structlog.get_logger()
 
-
-# Env Var credentials
+# Environment Var for credentials
 USERNAME = os.environ.get("LINKEDIN_USERNAME")
 PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
 
@@ -198,11 +197,6 @@ def save_linkedin_cookies(context):
     except Exception as e:
         logger.error(f"❌ Failed to save cookies: {e}")
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
 USERNAME = os.environ.get("LINKEDIN_USERNAME")
 PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
 
@@ -247,7 +241,7 @@ def login_linkedin(context, page):
 
 def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
     logger.info(f"📜 Scrolling until at least {min_cards} job cards are visible...")
-
+    
     # Dynamically detect the scrollable container holding job cards
     scroll_selector = page.evaluate("""
         () => {
@@ -264,6 +258,8 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
             return null;
         }
     """)
+    # log the selector we're trying to scroll
+    logger.debug(f"📌 Scroll selector detected: {scroll_selector}")
 
 
     if not scroll_selector:
@@ -343,8 +339,17 @@ def scrape_jobs(keyword, location, max_count=5):
 
                     paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
                     logger.info(f"🌐 Visiting: {paged_url}")
-                    page.goto(paged_url)
-                    page.wait_for_timeout(10000)
+                    page.goto(paged_url, wait_until="networkidle")
+                    
+                    if "security" in page.url or "checkpoint" in page.url:
+                       logger.critical(f"🛑 Bot detected or captcha page triggered at {page.url}")
+                       page.screenshot(path="screenshots/security_block.png", full_page=True)
+                       page.screenshot(path=f"screenshots/debug_{keyword}_{location}.png", full_page=True)
+                       logger.info("📸 Saved debug screenshot for review.")
+                       return []
+
+                    page.wait_for_selector(".job-card-container--clickable", timeout=10000)
+                    page.wait_for_timeout(2000)
 
                     if not scroll_job_list_panel(page, min_cards=25, delay=4):
                         logger.warning("⚠️ Scrolling failed. Skipping.")
