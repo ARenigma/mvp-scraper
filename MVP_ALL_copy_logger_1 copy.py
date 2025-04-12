@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 from tqdm import tqdm
 from datetime import datetime
+from upload_to_drive import upload_to_drive
 import csv
 import os
 import time
@@ -401,7 +402,11 @@ def scrape_jobs(keyword, location, max_count=5):
 
     return jobs
 
+OUTPUT_FOLDER = "output"
 
+def ensure_output_folder():
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
 
 def save_jobs(jobs, filename=None):
     """Save jobs to CSV, overwriting any existing file"""
@@ -409,9 +414,11 @@ def save_jobs(jobs, filename=None):
         logger.warning("⚠️ No jobs to save.")
         return filename
     
+    ensure_output_folder()  # Ensure output/ exists
+
     if filename is None:
         date_str = datetime.now().strftime("%d-%m-%Y")
-        filename = f"linkedin_jobs_{date_str}.csv"
+        filename = os.path.join(OUTPUT_FOLDER, f"linkedin_jobs_{date_str}.csv")
     
     keys = jobs[0].keys()
     with open(filename, "w", newline='', encoding='utf-8') as f:
@@ -508,3 +515,8 @@ if __name__ == "__main__":
         if all_jobs:
             save_jobs(all_jobs, filename)
             logger.info("✅ CSV saved successfully despite error (without COMPLETE marker)!")
+
+
+filename = save_jobs(all_jobs, filename)
+rename_file_complete(filename)
+upload_to_drive(filename)

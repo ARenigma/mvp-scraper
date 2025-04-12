@@ -1,0 +1,9 @@
+{
+    "build": {
+      "env": {
+        "PLAYWRIGHT_BROWSERS_PATH": "0"
+      },
+      "postInstallCommand": "playwright install --with-deps"
+    }
+  }
+  
