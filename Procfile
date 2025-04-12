@@ -1,1 +1,1 @@
-python3 MVP_ALL_Headless_Railway.py
+start: python3 MVP_ALL_Headless_Railway.py
