@@ -1,0 +1,30 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Ignore virtual environments
+env/
+venv/
+.venv/
+ENV/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Git stuff
+.git/
+.gitignore
+
+# Ignore credentials/secrets (handled via env vars on Railway)
+*.json
+*.pem
+*.key
+temp_creds.json
+
+# Ignore output CSVs (no need to bake into image)
+output/
+*.csv
