@@ -1,4 +1,4 @@
-playwright
+playwright==1.51.0
 tqdm
 python-dotenv
 schedule
