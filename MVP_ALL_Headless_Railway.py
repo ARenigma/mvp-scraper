@@ -13,6 +13,12 @@ import logging
 import structlog
 import sys
 
+OUTPUT_FOLDER = "output"
+
+def ensure_output_folder():
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
+
 # Standard logging setup
 log_file = f"linkedin_scraper_{datetime.now().strftime('%d%m%Y_%H%M%S')}.log"
 logging.basicConfig(
@@ -315,7 +321,7 @@ def scrape_jobs(keyword, location, max_count=5):
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)  # Headless browser
-        context = browser.contexts[0]
+        context = browser.new_context()
         
         # Load cookies (if exist)
         load_linkedin_cookies(context) 
@@ -436,10 +442,6 @@ def scrape_jobs(keyword, location, max_count=5):
     return jobs
 
 OUTPUT_FOLDER = "output"
-
-def ensure_output_folder():
-    if not os.path.exists(OUTPUT_FOLDER):
-        os.makedirs(OUTPUT_FOLDER)
 
 def save_jobs(jobs, filename=None):
     """Save jobs to CSV, overwriting any existing file"""
