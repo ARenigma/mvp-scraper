@@ -360,13 +360,13 @@ def scrape_jobs(keyword, location, max_count=5):
                        page.wait_for_selector(".job-card-container--clickable", timeout=10000)
                        page.wait_for_timeout(2000)
                     except Exception as e:
-                       screenshot_path = f"screenshots/goto_error_{keyword}_{location}.png"
+                       #screenshot_path = f"screenshots/goto_error_{keyword}_{location}.png"
                        
-                       from upload_to_drive import upload_screenshot_to_drive
-                       page.screenshot(path=screenshot_path, full_page=True)
-                       upload_screenshot_to_drive(screenshot_path)
+                       #from upload_to_drive import upload_screenshot_to_drive
+                       #page.screenshot(path=screenshot_path, full_page=True)
+                       #upload_screenshot_to_drive(screenshot_path)
 
-                       logger.critical(f"❌ Goto timeout or page error. Screenshot saved: {screenshot_path}")
+                       logger.critical(f"❌ Goto timeout or page error")
                        logger.exception(e)
                        return []
 
