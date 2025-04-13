@@ -176,9 +176,9 @@ def extract_job_details(page, location="", keyword=""):
 
     return job_details
 
-COOKIES_FILE = "linkedin_cookies.json"
+#COOKIES_FILE = "linkedin_cookies.json"
 
-def load_linkedin_cookies(context):
+#def load_linkedin_cookies(context):
     if os.path.exists(COOKIES_FILE):
         try:
             with open(COOKIES_FILE, "r") as f:
@@ -188,7 +188,7 @@ def load_linkedin_cookies(context):
         except Exception as e:
             logger.warning(f"⚠️ Failed to load cookies: {e}")
 
-def save_linkedin_cookies(context):
+#def save_linkedin_cookies(context):
     try:
         cookies = context.cookies()
         with open(COOKIES_FILE, "w") as f:
@@ -231,7 +231,7 @@ def login_linkedin(context, page):
         page.goto("https://www.linkedin.com/feed/")
         if "feed" in page.url:
             logger.info("✅ Logged in successfully.")
-            save_linkedin_cookies(context)
+            #save_linkedin_cookies(context)
         else:
             logger.warning("⚠️ Login may have failed. Check manually.")
 
@@ -319,14 +319,24 @@ def scrape_jobs(keyword, location, max_count=5):
     global_job_index = 1
     consecutive_empty_pages = 0
     max_empty_pages = 2
+    
+
+    # Write storage_state.json from environment variable
+    storage_state_content = os.getenv("STORAGE_STATE_JSON")
+
+    if storage_state_content is None:
+        raise Exception("STORAGE_STATE_JSON env variable not found")
+
+    with open("storage_state.json", "w") as f:
+        f.write(storage_state_content)
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)  # Headless browser
-        context = browser.new_context(storage_state="./storage_state.json")
+        context = browser.new_context(storage_state="storage_state.json")
 
         
         # Load cookies (if exist)
-        load_linkedin_cookies(context) 
+        #load_linkedin_cookies(context) 
         
         page = context.new_page()
         
