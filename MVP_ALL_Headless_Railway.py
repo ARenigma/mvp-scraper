@@ -322,7 +322,7 @@ def scrape_jobs(keyword, location, max_count=5):
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)  # Headless browser
-        context = browser.new_context(storage_state="storage_state.json")
+        context = browser.new_context(storage_state="./storage_state.json")
 
         
         # Load cookies (if exist)
