@@ -308,6 +308,11 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
 
     return True  # signal success to the caller    
 
+# Make Sure Screenshot Folder Exists
+if not os.path.exists("screenshots"):
+    os.makedirs("screenshots")
+
+
 def scrape_jobs(keyword, location, max_count=5):
     jobs = []
     start = 0
@@ -339,17 +344,21 @@ def scrape_jobs(keyword, location, max_count=5):
 
                     paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
                     logger.info(f"🌐 Visiting: {paged_url}")
-                    page.goto(paged_url, wait_until="networkidle")
-                    
-                    if "security" in page.url or "checkpoint" in page.url:
-                       logger.critical(f"🛑 Bot detected or captcha page triggered at {page.url}")
-                       page.screenshot(path="screenshots/security_block.png", full_page=True)
-                       page.screenshot(path=f"screenshots/debug_{keyword}_{location}.png", full_page=True)
-                       logger.info("📸 Saved debug screenshot for review.")
+                    try:
+                       page.goto(paged_url, wait_until="domcontentloaded", timeout=60000)
+                       page.wait_for_selector(".job-card-container--clickable", timeout=10000)
+                       page.wait_for_timeout(2000)
+                    except Exception as e:
+                       screenshot_path = f"screenshots/goto_error_{keyword}_{location}.png"
+                       
+                       from upload_to_drive import upload_screenshot_to_drive
+                       page.screenshot(path=screenshot_path, full_page=True)
+                       upload_screenshot_to_drive(screenshot_path)
+
+                       logger.critical(f"❌ Goto timeout or page error. Screenshot saved: {screenshot_path}")
+                       logger.exception(e)
                        return []
 
-                    page.wait_for_selector(".job-card-container--clickable", timeout=10000)
-                    page.wait_for_timeout(2000)
 
                     if not scroll_job_list_panel(page, min_cards=25, delay=4):
                         logger.warning("⚠️ Scrolling failed. Skipping.")

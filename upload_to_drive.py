@@ -61,6 +61,47 @@ def upload_to_drive(csv_path):
         logger.exception(f"❌ Upload failed: {e}")
         notify_telegram(f"❌ *Upload to Google Drive failed!*\n\nError:\n`{str(e)}`")
 
+def upload_screenshot_to_drive(image_path, drive_folder_id=None):
+    """
+    Upload a PNG screenshot to Google Drive.
+    """
+    try:
+        if not os.path.exists(image_path):
+            logger.error(f"❌ Screenshot not found: {image_path}")
+            return
+
+        # Load service account from ENV
+        SERVICE_ACCOUNT_FILE = "temp_creds.json"
+        key_data = json.loads(os.environ["GDRIVE_KEY_JSON"])
+        with open(SERVICE_ACCOUNT_FILE, "w") as f:
+            json.dump(key_data, f)
+
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE,
+            scopes=["https://www.googleapis.com/auth/drive"]
+        )
+        drive_service = build("drive", "v3", credentials=creds)
+
+        file_metadata = {
+            "name": os.path.basename(image_path),
+            "parents": [drive_folder_id or "1N2DJlGgDpjTKV4SizuLqo4oxGKOxe5yO"]  # fallback to default folder
+        }
+
+        media = MediaFileUpload(image_path, mimetype="image/png")
+
+        uploaded = drive_service.files().create(
+            body=file_metadata,
+            media_body=media,
+            fields="id,webViewLink"
+        ).execute()
+
+        logger.success(f"📤 Screenshot uploaded: {uploaded['webViewLink']}")
+        return uploaded["webViewLink"]
+
+    except Exception as e:
+        logger.exception(f"❌ Failed to upload screenshot: {e}")
+
+
 def notify_telegram(message):
     try:
         token = os.environ.get("TELEGRAM_BOT_TOKEN")
