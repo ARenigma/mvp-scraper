@@ -2,6 +2,9 @@ FROM mcr.microsoft.com/playwright/python:v1.51.0-jammy
 
 ENV PYTHONUNBUFFERED=1
 
+# Install xvfb (for headed mode)
+RUN apt-get update && apt-get install -y xvfb
+
 # Create app folder
 WORKDIR /app
 
@@ -19,4 +22,7 @@ RUN playwright install --with-deps
 EXPOSE 8000
 
 # Default command
-CMD ["python", "MVP_ALL_Railway.py"]
+#CMD ["python", "MVP_ALL_Railway.py"]
+
+# Default command using xvfb-run
+CMD ["xvfb-run", "python", "MVP_ALL_Railway.py"]
