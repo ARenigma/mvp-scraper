@@ -238,8 +238,8 @@ def extract_job_details(page, location="", keyword=""):
 def login_linkedin(page, context, browser):
     """Check if logged into LinkedIn. Retry if feed fails. Context reset fallback if needed."""
     
-    USERNAME = os.getenv("LINKEDIN_USERNAME")
-    PASSWORD = os.getenv("LINKEDIN_PASSWORD")
+    USERNAME = os.environ.get("LINKEDIN_USERNAME")
+    PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
 
     if not USERNAME or not PASSWORD:
         logger.critical("❌ LINKEDIN_USERNAME or LINKEDIN_PASSWORD environment variables not set!")
