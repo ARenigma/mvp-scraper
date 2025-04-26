@@ -66,9 +66,9 @@ def launch_browser_headless():
     page = context.new_page()
     return page, context, browser, playwright
 
-# Hardcoded credentials
-USERNAME = os.getenv("LINKEDIN_USERNAME")
-PASSWORD = os.getenv("LINKEDIN_PASSWORD")
+# Credentials env
+USERNAME = os.environ.get("LINKEDIN_USERNAME")
+PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
 
 # Hardcoded filter keywords for job title & locationPY py"flutter","react developer","full stack developer","frontend developer", "backend developer","node developer", "java developer",
 FILTER_KEYWORDS = [ "Python developer","PHP DEVELOPER"]
@@ -237,6 +237,14 @@ def extract_job_details(page, location="", keyword=""):
 
 def login_linkedin(page, context, browser):
     """Check if logged into LinkedIn. Retry if feed fails. Context reset fallback if needed."""
+    
+    USERNAME = os.getenv("LINKEDIN_USERNAME")
+    PASSWORD = os.getenv("LINKEDIN_PASSWORD")
+
+    if not USERNAME or not PASSWORD:
+        logger.critical("❌ LINKEDIN_USERNAME or LINKEDIN_PASSWORD environment variables not set!")
+        raise Exception("Missing LinkedIn credentials. Set them in Railway environment variables.")
+    
     try:
         logger.info("🔐 Checking LinkedIn login status...")
         page.goto("https://www.linkedin.com/feed/", wait_until="domcontentloaded", timeout=10000)
@@ -247,7 +255,7 @@ def login_linkedin(page, context, browser):
     except Exception as e:
         logger.warning(f"⚠️ Feed check failed: {e}")
         logger.info("⏳ Cooling down and retrying with new page...")
-        page.wait_for_timeout(10000)  # 20 second cooldown
+        page.wait_for_timeout(10000)  # cooldown
 
         try:
             fallback_page = context.new_page()
@@ -263,26 +271,25 @@ def login_linkedin(page, context, browser):
             try:
                 context.close()
             except:
-                pass
+                logger.warning("⚠️ Context close failed during reset.")
 
             context = browser.new_context()
             new_page = context.new_page()
-            new_page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded", timeout=10000)
-
-            logger.info("🔐 Filling LinkedIn credentials manually...")
-            new_page.fill("#username", USERNAME)
-            new_page.fill("#password", PASSWORD)
-            new_page.click("button[type='submit']")
-            new_page.wait_for_load_state("networkidle")
-            logger.info("✅ Logged in to LinkedIn after full context reset.")
-            return new_page, context
+            
+            try:
+                new_page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded", timeout=10000)
+                logger.info("🔐 Filling LinkedIn credentials manually...")
+                new_page.fill("#username", USERNAME)
+                new_page.fill("#password", PASSWORD)
+                new_page.click("button[type='submit']")
+                new_page.wait_for_load_state("networkidle")
+                logger.info("✅ Logged in to LinkedIn after full context reset.")
+                return new_page, context
 
             # If even this fails, you could optionally raise exception
-
-        except Exception as e:
-            logger.exception(f"⚠️ Login failed or already logged in: {e}")
-
-    return page, context  # Fallback safety    
+            except Exception as login_exception:
+                logger.exception(f"⚠️ Login failed or already logged in: {e}")
+                raise login_exception  # Stop everything, critical failure   
 
 def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
     logger.info(f"📜 Scrolling until at least {min_cards} job cards are visible...")
