@@ -66,10 +66,6 @@ def launch_browser_headless():
     page = context.new_page()
     return page, context, browser, playwright
 
-# Credentials env
-USERNAME = os.environ.get("LINKEDIN_USERNAME")
-PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
-
 # Hardcoded filter keywords for job title & locationPY py"flutter","react developer","full stack developer","frontend developer", "backend developer","node developer", "java developer",
 FILTER_KEYWORDS = [ "Python developer","PHP DEVELOPER"]
 LOCATIONS = ["Gurugram"]
@@ -238,8 +234,8 @@ def extract_job_details(page, location="", keyword=""):
 def login_linkedin(page, context, browser):
     """Check if logged into LinkedIn. Retry if feed fails. Context reset fallback if needed."""
     
-    USERNAME = os.environ.get("LINKEDIN_USERNAME")
-    PASSWORD = os.environ.get("LINKEDIN_PASSWORD")
+    USERNAME = os.getenv("LINKEDIN_USERNAME")
+    PASSWORD = os.getenv("LINKEDIN_PASSWORD")
 
     if not USERNAME or not PASSWORD:
         logger.critical("❌ LINKEDIN_USERNAME or LINKEDIN_PASSWORD environment variables not set!")
