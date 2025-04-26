@@ -52,7 +52,7 @@ def launch_browser_headless():
 
     playwright = sync_playwright().start()
     browser = playwright.chromium.launch(
-        headless=True,
+        headless=False,
         args=[
             "--no-sandbox",
             "--disable-dev-shm-usage",
@@ -62,6 +62,9 @@ def launch_browser_headless():
             "--disable-blink-features=AutomationControlled",
         ]
     )
+    page.emulate_media(media="screen")
+    page.set_viewport_size({"width": 1280, "height": 720})
+    context.set_default_timeout(15000)
     context = browser.new_context()
     page = context.new_page()
     return page, context, browser, playwright
