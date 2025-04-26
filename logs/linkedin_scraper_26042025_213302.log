@@ -1,0 +1,866 @@
+[2m2025-04-26 21:33:04[0m [[32m[1minfo     [0m] [1m🚀 Chrome debug session launched.[0m
+[2m2025-04-26 21:33:10[0m [[32m[1minfo     [0m] [1m🔐 Checking LinkedIn login status...[0m
+[2m2025-04-26 21:33:13[0m [[32m[1minfo     [0m] [1m✅ Already logged in to LinkedIn![0m
+[2m2025-04-26 21:33:23[0m [[33m[1mwarning  [0m] [1m⚡ No input received — starting fresh automatically after 10 seconds.[0m
+[2m2025-04-26 21:33:23[0m [[32m[1minfo     [0m] [1m🧹 Deleted resume file after successful complete scraping.[0m
+[2m2025-04-26 21:33:23[0m [[32m[1minfo     [0m] [1m
+🔎 Scraping for keyword 'Python developer' in 'Gurugram'[0m
+[2m2025-04-26 21:33:23[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Gurugram&start=0&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:33:25[0m [[32m[1minfo     [0m] [1m📜 Scrolling until at least 25 job cards are visible...[0m
+[2m2025-04-26 21:33:34[0m [[32m[1minfo     [0m] [1m✅ Loaded 29 job cards.        [0m
+[2m2025-04-26 21:33:34[0m [[32m[1minfo     [0m] [1m📄 Found 29 job cards.         [0m
+[2m2025-04-26 21:33:34[0m [[32m[1minfo     [0m] [1m✅ Beginning to process job cards...[0m
+[2m2025-04-26 21:33:34[0m [[32m[1minfo     [0m] [1m🔍 Job card #1 content:
+Python Developer openings in Wipro
+Python Developer openings in Wipro
+ITSource Technologies Limited
+Gurugram, Haryana, India (Hybrid)
+Viewed[0m
+[2m2025-04-26 21:33:34[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #1: 'python developer openings in wipro'[0m
+[2m2025-04-26 21:33:39[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m✅ [1] Python Developer openings in Wipro at ITSource Technologies Limited[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #2 content:
+PHP Laravel Developer
+PHP Laravel Developer
+Dhwani Astro
+New Delhi, Delhi, India (On-site)
+Viewed
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #3 content:
+Java-Full Stack Engineer
+Java-Full Stack Engineer
+UNLOCK BUSINESS CONSULTING
+Gurugram, Haryana, India (On-site)
+Response time is typically 4 days
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #4 content:
+Servicenow Integration Developer
+Servicenow Integration Developer
+Talent Worx
+Gurugram, Haryana, India (On-site)
+7 hours ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #5 content:
+Full Stack Developer
+Full Stack Developer
+Arting Digital
+Faridabad, Haryana, India (On-site)
+Viewed[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #6 content:
+PHP Developer Freelance
+PHP Developer Freelance
+NetEdge Computing Solutions Pvt. Ltd.
+Noida, Uttar Pradesh, India (Hybrid)
+Viewed
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #7 content:
+Software QE Engineer
+Software QE Engineer
+Vadis Technologies - A Moody's Company
+Noida, Uttar Pradesh, India (On-site)
+8 hours ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #8 content:
+Sailpoint Developer
+Sailpoint Developer
+Radiansys Inc.
+Gurugram, Haryana, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #9 content:
+SERVICEMAX DEVELOPER
+SERVICEMAX DEVELOPER with verification
+Tata Consultancy Services
+Delhi, India (On-site)
+35 school alumni work here
+35 Symbiosis College of Arts & Commerce school alumni work here
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #10 content:
+React with Python || Contract Job || 8-12Years
+React with Python || Contract Job || 8-12Years
+People Prime Worldwide
+Gurugram, Haryana, India (Hybrid)
+Viewed
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #11 content:
+Senior Cloud Operation Engineer
+Senior Cloud Operation Engineer with verification
+Oracle
+Noida, Uttar Pradesh, India (On-site)
+4 school alumni work here
+4 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #12 content:
+Intermediate Software Developer Java/J2ee 1
+Intermediate Software Developer Java/J2ee 1 with verification
+Descartes Systems Group
+Delhi, India (Hybrid)
+Viewed
+Promoted[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #13 content:
+Intermediate Software Developer Java/J2ee
+Intermediate Software Developer Java/J2ee with verification
+Descartes Systems Group
+Delhi, India (Hybrid)
+Viewed
+Promoted[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #14 content:
+Senior Software Developer -Java
+Senior Software Developer -Java with verification
+Descartes Systems Group
+Gurugram, Haryana, India (Hybrid)
+Viewed
+Promoted[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #15 content:
+Guidewire Integration Developer
+Guidewire Integration Developer
+Arting Digital
+New Delhi, Delhi, India (On-site)
+Applicant review time is typically 4 days
+9 hours ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:33:42[0m [[32m[1minfo     [0m] [1m🔍 Job card #16 content:
+Avaloq Software Engineer, VP
+Avaloq Software Engineer, VP with verification
+NatWest Group
+Gurugram, Haryana, India (On-site)
+4 school alumni work here
+4 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:33:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #17 content:
+Automation Engineer-Python Developer
+Automation Engineer-Python Developer with verification
+Ericsson
+Noida, Uttar Pradesh, India
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:33:43[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #17: 'automation engineer-python developer'[0m
+[2m2025-04-26 21:33:48[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m✅ [2] Automation Engineer-Python Developer at Ericsson[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #18 content:
+Applications Developer 3
+Applications Developer 3 with verification
+Oracle
+Noida, Uttar Pradesh, India (On-site)
+4 school alumni work here
+4 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #19 content:
+DevOps Engineer
+DevOps Engineer with verification
+AiSensy
+Gurugram, Haryana, India (On-site)
+Response time is typically 1-2 weeks
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #20 content:
+Salesforce Technical Architect
+Salesforce Technical Architect
+Cozzera
+Noida, Uttar Pradesh, India (On-site)
+Response time is typically 4 days
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #21 content:
+Python Devops Engineer
+Python Devops Engineer
+Straive
+Gurugram, Haryana, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #22 content:
+Data Engineer
+Data Engineer
+Yum! Digital & Tech India
+Gurugram, Haryana, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #23 content:
+Dot Net Developer
+Dot Net Developer with verification
+FNZ 
+Gurugram, Haryana, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #24 content:
+Event Promoter (Sales Marketer)
+Alfaleus Technology Private Limited
+New Delhi, Delhi, India (On-site)
+1 month ago
+Be an early applicant
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #25 content:
+Sales Specialist
+Sunshine Reality gurgoan
+Gurugram, Haryana, India (On-site)
+1 week ago
+Be an early applicant
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #26 content:
+Student Volunteer
+Jan Sanjeevni Trust
+Delhi, Delhi, India (Hybrid)
+Applicant review time is typically 2 days
+2 weeks ago
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #27 content:
+Social Media Marketing Intern
+Happy Kidz Club School
+Pune, Maharashtra, India (Hybrid)
+1 week ago
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #28 content:
+Key Account Executive
+Nat Habit
+Gurugram, Haryana, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🔍 Job card #29 content:
+Marketing Associate
+Travelwings.com
+Gurgaon, Haryana, India (Hybrid)
+3 weeks ago[0m
+[2m2025-04-26 21:33:51[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Gurugram&start=25&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:33:53[0m [[33m[1mwarning  [0m] [1m⚠️ Navigation/visibility failed on attempt 1: Job card panel not visible after page load.[0m
+[2m2025-04-26 21:33:53[0m [[32m[1minfo     [0m] [1m🔄 Refreshing page and retrying...[0m
+[2m2025-04-26 21:34:00[0m [[33m[1mwarning  [0m] [1m⚠️ Page reload failed.        [0m
+[2m2025-04-26 21:34:05[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Gurugram&start=25&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 2)[0m
+[2m2025-04-26 21:34:06[0m [[33m[1mwarning  [0m] [1m⚠️ Navigation/visibility failed on attempt 2: Job card panel not visible after page load.[0m
+[2m2025-04-26 21:34:11[0m [[31m[1merror    [0m] [1m❌ Navigation failed after 2 attempts: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Gurugram&start=25&f_TPR=r86400&f_WT=1%2C1%2C3[0m
+[2m2025-04-26 21:34:11[0m [[32m[1minfo     [0m] [1m⛔ Reached end of results — skipping screenshot.[0m
+[2m2025-04-26 21:34:11[0m [[32m[1minfo     [0m] [1m💾 Saved resume point at combo #1: 'Python developer' in 'Gurugram'[0m
+[2m2025-04-26 21:34:11[0m [[32m[1minfo     [0m] [1m
+🔎 Scraping for keyword 'Python developer' in 'Bengaluru'[0m
+[2m2025-04-26 21:34:11[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Bengaluru&start=0&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:34:13[0m [[32m[1minfo     [0m] [1m📜 Scrolling until at least 25 job cards are visible...[0m
+[2m2025-04-26 21:34:29[0m [[32m[1minfo     [0m] [1m✅ Loaded 25 job cards.        [0m
+[2m2025-04-26 21:34:29[0m [[32m[1minfo     [0m] [1m📄 Found 25 job cards.         [0m
+[2m2025-04-26 21:34:29[0m [[32m[1minfo     [0m] [1m✅ Beginning to process job cards...[0m
+[2m2025-04-26 21:34:29[0m [[32m[1minfo     [0m] [1m🔍 Job card #1 content:
+Python developer
+Python developer with verification
+Infosys
+Bengaluru East, Karnataka, India (On-site)
+38 school alumni work here
+38 Symbiosis College of Arts & Commerce school alumni work here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:34:29[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #1: 'python developer'[0m
+[2m2025-04-26 21:34:35[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m✅ [1] Python developer at Infosys[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m🔍 Job card #2 content:
+Backend Engineer
+Backend Engineer
+Bhanzu
+Bengaluru, Karnataka, India (On-site)
+₹1.6M/yr - ₹4M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m🔍 Job card #3 content:
+Back End Developer - JAVA
+Back End Developer - JAVA
+Workassist
+Bengaluru, Karnataka, India (On-site)
+Viewed
+Promoted[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m🔍 Job card #4 content:
+Data Engineer
+Data Engineer
+Shri Shyam Consulting 
+Bengaluru, Karnataka, India (On-site)
+3 hours ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m🔍 Job card #5 content:
+Python developer with Playwright
+Python developer with Playwright
+VySystems
+Bengaluru, Karnataka, India (On-site)
+Viewed
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:34:38[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #5: 'python developer with playwright'[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m✅ [2] Python developer with Playwright at VySystems[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #6 content:
+The Hub logo
+Php Developer
+Php Developer
+The Hub
+Bengaluru, Karnataka, India
+₹500K/yr - ₹1.5M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #7 content:
+Java Software Engineer
+Java Software Engineer
+HireAlpha
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #8 content:
+Software Engineer
+Software Engineer with verification
+Tejas Networks
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #9 content:
+Software Developer
+Software Developer
+Supr Daily by Swiggy
+Bengaluru, Karnataka, India (On-site)
+₹1.8M/yr - ₹4M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m🔍 Job card #10 content:
+Python Developer
+Python Developer
+CloudPanel Technologies
+Bengaluru, Karnataka, India (On-site)
+₹200K/yr - ₹600K/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:34:43[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #10: 'python developer'[0m
+[2m2025-04-26 21:34:49[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:34:52[0m [[32m[1minfo     [0m] [1m✅ [3] Python Developer at CloudPanel Technologies[0m
+[2m2025-04-26 21:34:52[0m [[32m[1minfo     [0m] [1m🔍 Job card #11 content:
+Senior Deep Learning Computer Vision Engineer
+Senior Deep Learning Computer Vision Engineer
+Indus Vision
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:34:52[0m [[32m[1minfo     [0m] [1m🔍 Job card #12 content:
+Python Developer (Standard)
+Python Developer (Standard) with verification
+Infogain
+Bengaluru, Karnataka, India (On-site)
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:34:52[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #12: 'python developer (standard)'[0m
+[2m2025-04-26 21:34:57[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m✅ [4] Python Developer (Standard) at Infogain[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #13 content:
+Teradata Developer- Sr Software Engineer - BF- 33709-33395- JR148864
+Teradata Developer- Sr Software Engineer - BF- 33709-33395- JR148864
+Carelon Global Solutions India
+Bengaluru South, Karnataka, India (On-site)
+Promoted[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #14 content:
+Game Developement Trainer
+Game Developement Trainer with verification
+FACE Prep
+Bengaluru, Karnataka, India (On-site)
+46 minutes ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #15 content:
+Java developer
+Java developer with verification
+Softenger
+Bangalore Urban, Karnataka, India (On-site)
+Viewed
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #16 content:
+Back End Developer(Golang)
+Back End Developer(Golang)
+People Prime Worldwide
+Bangalore Urban, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #17 content:
+Fullstack Developer
+Fullstack Developer
+IT RENT GURU
+Bengaluru, Karnataka, India (On-site)
+₹600K/yr - ₹1.2M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m🔍 Job card #18 content:
+Backend Developer - Python/Java/Performance Tuning
+Backend Developer - Python/Java/Performance Tuning
+Artivatic.ai
+Bengaluru, Karnataka, India
+₹500K/yr - ₹1M/yr
+Viewed[0m
+[2m2025-04-26 21:35:01[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #18: 'backend developer - python/java/performance tuning'[0m
+[2m2025-04-26 21:35:06[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m✅ [5] Backend Developer - Python/Java/Performance Tuning at Artivatic.ai[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #19 content:
+Shopify Developer
+Shopify Developer
+Honeycomb Creative & Marketing Communications
+Bengaluru, Karnataka, India (On-site)
+₹400K/yr - ₹600K/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #20 content:
+Dot Net Developer
+Dot Net Developer
+Arting Digital
+Bengaluru, Karnataka, India (On-site)
+₹1.5M/yr - ₹2M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #21 content:
+Jr Backend Engineer
+Jr Backend Engineer
+Qrata
+Bengaluru, Karnataka, India (On-site)
+₹700K/yr - ₹1.3M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #22 content:
+Senior Software Developer
+Senior Software Developer with verification
+IQVIA
+Bengaluru, Karnataka, India (On-site)
+Promoted[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #23 content:
+Software Development Engineer, Alexa Global Quality
+Software Development Engineer, Alexa Global Quality with verification
+Amazon
+Bengaluru, Karnataka, India
+44 school alumni work here
+44 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #24 content:
+Developer - L3
+Developer - L3 with verification
+Wipro
+Bengaluru, Karnataka, India (On-site)
+33 school alumni work here
+33 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🔍 Job card #25 content:
+NodeJS Developer
+NodeJS Developer
+BooksApp
+Bengaluru, Karnataka, India (On-site)
+₹300K/yr - ₹400K/yr
+Viewed[0m
+[2m2025-04-26 21:35:09[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Bengaluru&start=25&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:35:11[0m [[32m[1minfo     [0m] [1m📜 Scrolling until at least 25 job cards are visible...[0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m✅ Loaded 25 job cards.        [0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m📄 Found 25 job cards.         [0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m✅ Beginning to process job cards...[0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m🔍 Job card #1 content:
+Backend Developer
+Backend Developer
+Dotball Interactive Private Limited
+Bengaluru, Karnataka, India (On-site)
+₹300K/yr - ₹800K/yr
+Viewed[0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m🔍 Job card #2 content:
+The Hub logo
+DevOps Engineer
+DevOps Engineer
+The Hub
+Bengaluru, Karnataka, India (On-site)
+₹800K/yr - ₹1.2M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m🔍 Job card #3 content:
+Python Developer (Lead)
+Python Developer (Lead) with verification
+Infogain
+Bengaluru, Karnataka, India (On-site)
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:35:28[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #3: 'python developer (lead)'[0m
+[2m2025-04-26 21:35:33[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m✅ [6] Python Developer (Lead) at Infogain[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m🔍 Job card #4 content:
+Fullstack Developer
+Fullstack Developer
+IT RENT GURU
+Bengaluru, Karnataka, India (On-site)
+₹600K/yr - ₹1.2M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m🔍 Job card #5 content:
+React.js Developer
+React.js Developer
+VidPro Consultancy Services
+Bengaluru, Karnataka, India (On-site)
+₹1M/yr - ₹3.5M/yr
+Viewed
+Easy Apply[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m🔍 Job card #6 content:
+SDET 2
+SDET 2
+Niyo Solutions Inc.
+Bengaluru, Karnataka, India (On-site)
+Viewed[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m🔍 Job card #7 content:
+Software Engineer 2
+Software Engineer 2 with verification
+Dell Technologies
+Bengaluru, Karnataka, India (On-site)
+2 school alumni work here
+2 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m🔍 Job card #8 content:
+IN-Senior Associate_ Python Developers _Advisory Corporate_ Bangalore
+IN-Senior Associate_ Python Developers _Advisory Corporate_ Bangalore with verification
+PwC India
+Bengaluru, Karnataka, India (On-site)
+25 school alumni work here
+25 Symbiosis College of Arts & Commerce school alumni work here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:35:36[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #8: 'in-senior associate_ python developers _advisory corporate_ bangalore'[0m
+[2m2025-04-26 21:35:42[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m✅ [7] IN-Senior Associate_ Python Developers _Advisory Corporate_ Bangalore at PwC India[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #9 content:
+Fullstack Developer
+Fullstack Developer
+1985
+Bengaluru, Karnataka, India
+₹300K/yr - ₹500K/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #10 content:
+Java Software Engineer
+Java Software Engineer
+Teamware Solutions
+Bengaluru, Karnataka, India (Hybrid)
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #11 content:
+PYTHON AUTOMATION WITH HARDWARE
+PYTHON AUTOMATION WITH HARDWARE
+Terralogic
+Bengaluru, Karnataka, India
+6 hours ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #12 content:
+Bigdata - Hadoop
+Bigdata - Hadoop
+Live Connections
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #13 content:
+Senior Full Stack Developer (.NET)
+Senior Full Stack Developer (.NET)
+Hireginie
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #14 content:
+Software Engineer
+Software Engineer with verification
+NetApp
+Bengaluru, Karnataka, India
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #15 content:
+Senior Siebel Developer
+Senior Siebel Developer with verification
+Tata Consultancy Services
+Bengaluru, Karnataka, India (On-site)
+35 school alumni work here
+35 Symbiosis College of Arts & Commerce school alumni work here
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #16 content:
+Developer - L3
+Developer - L3 with verification
+Wipro
+Bengaluru, Karnataka, India (On-site)
+33 school alumni work here
+33 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #17 content:
+Node.js Developer
+Node.js Developer
+Algoquant
+Bengaluru, Karnataka, India (On-site)
+Viewed[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #18 content:
+Android Developer
+Android Developer
+slam8
+Bengaluru, Karnataka, India
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #19 content:
+Performance Testing Engineer
+Performance Testing Engineer
+ZestPire
+Bengaluru, Karnataka, India (Hybrid)
+Applicant review time is typically 1-2 weeks
+18 minutes ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #20 content:
+Senior Software Engineer - C
+Senior Software Engineer - C with verification
+Capgemini
+Bengaluru East, Karnataka, India (On-site)
+30 school alumni work here
+30 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #21 content:
+Senior Software Engineer
+Senior Software Engineer
+ClassCast
+Bengaluru, Karnataka, India (On-site)
+₹800K/yr - ₹1.5M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #22 content:
+Software Development Engineer, Analytics & Data Management, Advertising Core Services
+Software Development Engineer, Analytics & Data Management, Advertising Core Services with verification
+Amazon
+Bengaluru, Karnataka, India
+44 school alumni work here
+44 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #23 content:
+Python Tech Lead
+Python Tech Lead
+Artelus.ai
+Bengaluru, Karnataka, India
+₹500K/yr - ₹2.4M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #24 content:
+Rs Consultants logo
+Native Android Developer - B2C
+Native Android Developer - B2C
+Rs Consultants
+Bengaluru, Karnataka, India
+₹1M/yr - ₹1.5M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🔍 Job card #25 content:
+Servicenow Integration Developer
+Servicenow Integration Developer
+Talent Worx
+Bengaluru, Karnataka, India (On-site)
+7 hours ago
+Within the past 24 hours
+Easy Apply[0m
+[2m2025-04-26 21:35:45[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Bengaluru&start=50&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:35:47[0m [[32m[1minfo     [0m] [1m📜 Scrolling until at least 25 job cards are visible...[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m✅ Loaded 25 job cards.        [0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m📄 Found 25 job cards.         [0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m✅ Beginning to process job cards...[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #1 content:
+SAILPOINT IIQ
+SAILPOINT IIQ
+Live Connections
+Greater Bengaluru Area (On-site)
+Viewed
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #2 content:
+Developer - L3
+Developer - L3 with verification
+Wipro
+Bengaluru, Karnataka, India (On-site)
+33 school alumni work here
+33 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #3 content:
+Associate Machine Learning Engineer (Contract)
+Associate Machine Learning Engineer (Contract) with verification
+Observe.AI
+Bengaluru, Karnataka, India (On-site)
+Promoted[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #4 content:
+Senior Software Engineer - Flutter
+Senior Software Engineer - Flutter
+Qrata
+Bengaluru, Karnataka, India (On-site)
+₹700K/yr - ₹1M/yr
+Viewed[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #5 content:
+Embedded Engineer
+Embedded Engineer
+People Prime Worldwide
+Bengaluru, Karnataka, India (On-site)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #6 content:
+Data Quality Assurance Engineer
+Data Quality Assurance Engineer with verification
+Applicantz
+Bengaluru, Karnataka, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #7 content:
+Java Developer
+Java Developer
+HyreSpree
+Bengaluru, Karnataka, India (On-site)
+₹1M/yr - ₹1.2M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #8 content:
+Full Stack Engineer
+Full Stack Engineer with verification
+Aditi Consulting
+Bengaluru, Karnataka, India (Hybrid)
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Viewed
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m🔍 Job card #9 content:
+Python Developer
+Python Developer with verification
+Persistent Systems
+Bengaluru, Karnataka, India (On-site)
+13 school alumni work here
+13 Symbiosis College of Arts & Commerce school alumni work here
+Viewed
+Promoted[0m
+[2m2025-04-26 21:36:04[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #9: 'python developer'[0m
+[2m2025-04-26 21:36:09[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m✅ [8] Python Developer at Persistent Systems[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #10 content:
+Backend Engineer / Architect
+Backend Engineer / Architect
+Scapic (Acquired by Flipkart)
+Bengaluru, Karnataka, India (On-site)
+₹600K/yr - ₹1M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #11 content:
+Senior Software Engineer
+Senior Software Engineer
+BitClass
+Bengaluru, Karnataka, India (On-site)
+₹800K/yr - ₹2.4M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #12 content:
+MERN Stack Developer
+MERN Stack Developer
+Expertia AI
+Bangalore Urban, Karnataka, India
+Promoted[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #13 content:
+Software Engineer III - UI
+Software Engineer III - UI
+JPMorganChase
+Bengaluru, Karnataka, India (On-site)
+31 school alumni work here
+31 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #14 content:
+Software Engineer III
+Software Engineer III with verification
+Walmart Global Tech India
+Bengaluru, Karnataka, India (On-site)
+Promoted[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #15 content:
+Java Developer
+Java Developer
+Uncap Research Labs
+Bengaluru, Karnataka, India (On-site)
+₹800K/yr - ₹1.5M/yr
+Viewed[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #16 content:
+AWS Data Engineer (Pyspark)
+AWS Data Engineer (Pyspark) with verification
+Tata Consultancy Services
+Bengaluru, Karnataka, India (On-site)
+35 school alumni work here
+35 Symbiosis College of Arts & Commerce school alumni work here
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #17 content:
+Senior Systems Software Engineer
+Senior Systems Software Engineer with verification
+Citrix
+Bengaluru, Karnataka, India (On-site)
+Promoted[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #18 content:
+React Native DEveloper
+React Native DEveloper
+MillenniumIT
+Bengaluru, Karnataka, India (On-site)
+₹500K/yr - ₹900K/yr
+Viewed[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #19 content:
+Sr. Software Engineer
+Sr. Software Engineer with verification
+BayOne Solutions
+Bengaluru, Karnataka, India (Hybrid)
+Promoted
+Easy Apply[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #20 content:
+Software Engineering - Subject Matter Expert
+Software Engineering - Subject Matter Expert with verification
+Annalect India
+Bengaluru, Karnataka, India (On-site)
+1 school alum works here
+1 Symbiosis College of Arts & Commerce school alum works here
+Promoted[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #21 content:
+Data Engineer
+Data Engineer
+Fragma Data Systems
+Bengaluru, Karnataka, India (On-site)
+₹600K/yr - ₹1.6M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #22 content:
+Senior iOS Developer
+Senior iOS Developer
+Tarento Group
+Bengaluru, Karnataka, India (On-site)
+Viewed[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m🔍 Job card #23 content:
+Senior Associate Technology L2 - Python Developer
+Senior Associate Technology L2 - Python Developer with verification
+Publicis Sapient
+Bengaluru, Karnataka, India (On-site)
+2 school alumni work here
+2 Symbiosis College of Arts & Commerce school alumni work here
+Viewed[0m
+[2m2025-04-26 21:36:13[0m [[32m[1minfo     [0m] [1m👉 Match Found - Clicking job card #23: 'senior associate technology l2 - python developer'[0m
+[2m2025-04-26 21:36:18[0m [[32m[1minfo     [0m] [1m✅ Dynamically found the job top card container.[0m
+[2m2025-04-26 21:36:19[0m [[32m[1minfo     [0m] [1m✅ [9] Senior Associate Technology L2 - Python Developer at Publicis Sapient[0m
+[2m2025-04-26 21:36:19[0m [[32m[1minfo     [0m] [1m🔍 Job card #24 content:
+Fullstack Developer
+Fullstack Developer
+Logistimo
+Bengaluru, Karnataka, India (On-site)
+₹2M/yr - ₹3M/yr
+1 hour ago
+Within the past 24 hours[0m
+[2m2025-04-26 21:36:19[0m [[32m[1minfo     [0m] [1m🔍 Job card #25 content:
+Applications Developer 3
+Applications Developer 3 with verification
+Oracle
+Bengaluru, Karnataka, India (On-site)
+4 school alumni work here
+4 Symbiosis College of Arts & Commerce school alumni work here
+Promoted[0m
+[2m2025-04-26 21:36:19[0m [[32m[1minfo     [0m] [1m🌐 Visiting: https://www.linkedin.com/jobs/search/?keywords=Python developer&location=Bengaluru&start=75&f_TPR=r86400&f_WT=1%2C1%2C3 (Attempt 1)[0m
+[2m2025-04-26 21:36:21[0m [[32m[1minfo     [0m] [1m📜 Scrolling until at least 25 job cards are visible...[0m
+[2m2025-04-26 21:36:26[0m [[33m[1mwarning  [0m] [1m
+
+⚠️ Stopping the bot due to keyboard interrupt (Ctrl+C)...[0m
+[2m2025-04-26 21:36:26[0m [[32m[1minfo     [0m] [1m💾 Saved 2 jobs to output\2025-04-26\linkedin_jobs_26-04-2025_2136.csv[0m
+[2m2025-04-26 21:36:26[0m [[32m[1minfo     [0m] [1m✅ CSV saved successfully (without COMPLETE marker)![0m

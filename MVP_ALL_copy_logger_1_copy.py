@@ -41,9 +41,9 @@ logger = structlog.get_logger()
 USERNAME = "you@example.com"
 PASSWORD = "23ranjan"
 
-# Hardcoded filter keywords for job title & location
-FILTER_KEYWORDS = ["node", "python developer", "php developer", "java", "laravel", "django", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
-LOCATIONS = ["Bengaluru", "Gurugram"]
+# Hardcoded filter keywords for job title & locationPY py"flutter","react developer","full stack developer","frontend developer", "backend developer","node developer", "java developer",
+FILTER_KEYWORDS = [ "Python developer","PHP DEVELOPER", "LARAVEL", "DJANGO", "qa engineer", "SDET"]
+LOCATIONS = ["Gurugram"]
 
 def is_chrome_running(port=9222):
     """Check if Chrome with remote debugging is already running."""
@@ -516,7 +516,4 @@ if __name__ == "__main__":
             save_jobs(all_jobs, filename)
             logger.info("✅ CSV saved successfully despite error (without COMPLETE marker)!")
 
-
-filename = save_jobs(all_jobs, filename)
-rename_file_complete(filename)
 #upload_to_drive(filename)

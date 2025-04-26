@@ -10,5 +10,11 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Install Playwright browsers (already installed usually, but safer to force reinstall)
+RUN playwright install --with-deps
+
+# Expose port (optional for Railway — just in case you later add webhooks, etc.)
+EXPOSE 8000
+
 # Default command
-CMD ["python", "MVP_ALL_Headless_Railway.py"]
+CMD ["python", "MVP_ALL_Railway.py"]

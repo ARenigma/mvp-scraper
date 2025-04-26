@@ -1,20 +1,60 @@
 from playwright.sync_api import sync_playwright
 from tqdm import tqdm
 from datetime import datetime
-import csv
+#from upload_to_drive import upload_to_drive
+import pandas as pd
 import os
+import json
 import time
 import re
 import subprocess
 import socket
+import logging
+import structlog
+import sys
+import threading
+
+# Create logs/ folder if it doesn't exist
+LOG_FOLDER = "logs"
+os.makedirs(LOG_FOLDER, exist_ok=True)
+
+# Define timestamped log file path
+log_file = os.path.join(LOG_FOLDER, f"linkedin_scraper_{datetime.now().strftime('%d%m%Y_%H%M%S')}.log")
+
+# Log to both file and terminal
+logging.basicConfig(
+    format="%(message)s",
+    level=logging.INFO,
+    handlers=[
+        logging.FileHandler(log_file, mode='w', encoding='utf-8'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+# Structlog configuration
+structlog.configure(
+    processors=[
+        structlog.stdlib.add_log_level,                  # Add log level to event dict
+        structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M:%S"),
+        structlog.dev.set_exc_info,                      # show exception stack if present
+        structlog.dev.ConsoleRenderer(colors=True),     # pretty console output with color
+    ],
+    context_class=dict,
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.make_filtering_bound_logger(logging.INFO),
+    cache_logger_on_first_use=True,
+)
+
+logger = structlog.get_logger()
+
 
 # Hardcoded credentials
-USERNAME = "you@example.com"
+USERNAME = "testrelay97@gmail.com"
 PASSWORD = "23ranjan"
 
-# Hardcoded filter keywords for job title & location
-FILTER_KEYWORDS = ["node", "python", "php", "java", "laravel", "django", "kafka", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
-LOCATIONS = ["Gurgaon", "Delhi", "Gurugram", "Noida"]
+# Hardcoded filter keywords for job title & locationPY py"flutter","react developer","full stack developer","frontend developer", "backend developer","node developer", "java developer",
+FILTER_KEYWORDS = [ "Python developer","PHP DEVELOPER", "LARAVEL", "DJANGO", "qa engineer", "SDET", "node developer", "java developer", "flutter", "iOS developer", "react", "full stack", "frontend", "backend"]
+LOCATIONS = ["Gurugram", "Bengaluru"]
 
 def is_chrome_running(port=9222):
     """Check if Chrome with remote debugging is already running."""
@@ -23,16 +63,16 @@ def is_chrome_running(port=9222):
 
 def launch_chrome_debug():
     if is_chrome_running():
-        print("🟢 Chrome with debugging already running.")
+        logger.info("🟢 Chrome with debugging already running.")
         return
 
     bat_path = r"C:\Users\Admin\Desktop\LinkedIn_Scraper\chrome local instance (STEP-1).bat"  # UPDATE this path
     try:
         subprocess.Popen([bat_path], shell=True)
-        print("🚀 Chrome debug session launched.")
+        logger.info("🚀 Chrome debug session launched.")
         time.sleep(5)
     except Exception as e:
-        print(f"❌ Failed to launch Chrome: {e}")
+        logger.exception(f"❌ Failed to launch Chrome: {e}")
 
 def extract_text(locator, selector, default="Not Specified"):
     try:
@@ -52,13 +92,69 @@ def extract_href(locator, selector, default=""):
     except:
         return default
 
-def extract_job_details(page):
+def find_job_top_card(page):
+    """Finds the top card container dynamically based on the presence of muted buttons like On-site, Full-time, etc."""
+    try:
+        divs = page.locator("div").all()
+        for div in divs:
+            div_text = div.inner_text().lower()
+            if (
+                ("full-time" in div_text or "on-site" in div_text or "remote" in div_text or "hybrid" in div_text)
+                and div.locator("button.artdeco-button--muted").count() > 0
+            ):
+                logger.info("✅ Dynamically found the job top card container.")
+                return div
+    except Exception as e:
+        logger.warning(f"⚠️ Failed to dynamically locate job top card: {e}")
+    return None
+
+def extract_workplace_type_job_type_and_job_budget(page):
+    """Extract Workplace Type and Job Type dynamically without depending on hardcoded div names."""
+    workplace_type = None
+    job_type = None
+    job_budget = None
+
+
+    try:
+        top_card = find_job_top_card(page)
+        if not top_card:
+            logger.warning("⚠️ Could not find dynamic top card container for job details.")
+            return workplace_type, job_type
+
+        buttons = top_card.locator("button.artdeco-button--muted")
+        count = buttons.count()
+
+        for i in range(count):
+            try:
+                text = buttons.nth(i).inner_text(timeout=3000).strip().lower()
+                logger.debug(f"🔎 Button {i}: {text}")
+
+                if text in ["on-site", "remote", "hybrid"]:
+                    workplace_type = text.title()
+                elif text in ["full-time", "part-time", "contract", "internship", "temporary", "volunteer", "other"]:
+                    job_type = text.title()
+                
+                 # Check for salary format like "₹600K/yr - ₹2M/yr"
+                elif "₹" in text or "$" in text or "€" in text or "£" in text:
+                    job_budget = buttons.nth(i).inner_text(timeout=3000).strip()    
+            except Exception as e:
+                logger.debug(f"⚠️ Failed reading button {i}: {e}")
+
+    except Exception as e:
+        logger.warning(f"⚠️ Failed to extract job type fields: {e}")
+
+    return workplace_type, job_type, job_budget
+
+def extract_job_details(page, location="", keyword=""):
     job_details = {
         "Job Title": "Not Specified",
+        "Job City": location,
+        "Job Profile": keyword,
         "Company Name": "Not Specified",
         "Job Location": "Not Specified",
         "Workplace Type": "Not Specified",
         "Job Type": "Not Specified",
+        "Job Budget": "Not Specified",
         "Posted Time": "Not Specified",
         "Total Employees": "Not Specified",
         "Industry": "Not Specified",
@@ -82,32 +178,14 @@ def extract_job_details(page):
         except:
             pass
 
-        # Workplace Type
-        try:
-            insight_texts = page.locator(".job-details-preferences-and-skills__pill").all_text_contents()
-            for text in insight_texts:
-                if "workplace type is" in text.lower():
-                    if "on-site" in text.lower():
-                        job_details["Workplace Type"] = "On-site"
-                    elif "remote" in text.lower():
-                        job_details["Workplace Type"] = "Remote"
-                    elif "hybrid" in text.lower():
-                        job_details["Workplace Type"] = "Hybrid"
-                    break
-        except:
-            pass
-
-        # Job Type from skill/insight section
-        insight_elements = page.locator(".job-details-preferences-and-skills__pill").all()
-        for element in insight_elements:
-            text = element.text_content().strip()
-            #print(f"🔍 Found insight element: {text}")
-            lower_text = text.lower()
-            if any(jt in lower_text for jt in ["full-time", "part-time", "contract", "internship", "temporary"]):
-                job_type_clean = re.sub(r"matches your job preferences.*", "", text, flags=re.IGNORECASE).strip()
-                job_details["Job Type"] = job_type_clean
-            if "ago" in lower_text:
-                job_details["Posted Time"] = text.strip()
+        # Workplace, Job Type, and Job Budget (using dynamic method)
+        workplace_type, job_type, job_budget = extract_workplace_type_job_type_and_job_budget(page)
+        if workplace_type:
+            job_details["Workplace Type"] = workplace_type
+        if job_type:
+            job_details["Job Type"] = job_type
+        if job_budget:
+            job_details["Job Budget"] = job_budget    
 
         # Job URL        
         try:
@@ -149,36 +227,65 @@ def extract_job_details(page):
             hirer_card = page.locator("div.hirer-card__hirer-information")
             job_details["Hiring Manager URL"] = extract_href(hirer_card, "a")
         except Exception as e:
-            print(f"❌ Error extracting Hiring Manager URL: {e}")
+            logger.error(f"❌ Error extracting Hiring Manager URL: {e}")
             job_details["Hiring Manager URL"] = ""
 
     except Exception as e:
-        print(f"❌ Error extracting job details: {e}")
+        logger.exception(f"❌ Error extracting job details: {e}")
 
     return job_details
 
-def login_linkedin(page):
-    page.goto("https://www.linkedin.com/feed/", timeout=5000)
-
-    # If redirected to feed, you're already logged in
-    if "feed" in page.url:
-        print("✅ Already logged in to LinkedIn!")
-        return
-
-    # Otherwise, go to login and fill credentials
-    print("🔐 Logging in to LinkedIn...")
-    page.goto("https://www.linkedin.com/login")
+def login_linkedin(page, context, browser):
+    """Check if logged into LinkedIn. Retry if feed fails. Context reset fallback if needed."""
     try:
-        page.fill("#username", USERNAME)
-        page.fill("#password", PASSWORD)
-        page.click("button[type='submit']")
-        page.wait_for_load_state("networkidle")
-        print("✅ Logged in to LinkedIn")
+        logger.info("🔐 Checking LinkedIn login status...")
+        page.goto("https://www.linkedin.com/feed/", wait_until="domcontentloaded", timeout=10000)
+        page.wait_for_selector(".global-nav__me-photo", timeout=4000)
+        logger.info("✅ Already logged in to LinkedIn!")
+        return page, context
+
     except Exception as e:
-        print(f"⚠️ Login failed or already logged in: {e}")
+        logger.warning(f"⚠️ Feed check failed: {e}")
+        logger.info("⏳ Cooling down and retrying with new page...")
+        page.wait_for_timeout(20000)  # 20 second cooldown
+
+        try:
+            fallback_page = context.new_page()
+            fallback_page.goto("https://www.linkedin.com/feed/", wait_until="domcontentloaded", timeout=10000)
+            fallback_page.wait_for_selector(".global-nav__me-photo", timeout=4000)
+            logger.info("✅ Logged in successfully after fallback page retry.")
+            return fallback_page, context
+
+        except Exception as fallback_error:
+            logger.warning(f"⚠️ Fallback page feed check also failed: {fallback_error}")
+            logger.info("♻️ Resetting context and trying fresh login...")
+
+            try:
+                context.close()
+            except:
+                pass
+
+            context = browser.new_context()
+            new_page = context.new_page()
+            new_page.goto("https://www.linkedin.com/login", wait_until="domcontentloaded", timeout=10000)
+
+            logger.info("🔐 Filling LinkedIn credentials manually...")
+            new_page.fill("#username", USERNAME)
+            new_page.fill("#password", PASSWORD)
+            new_page.click("button[type='submit']")
+            new_page.wait_for_load_state("networkidle")
+            logger.info("✅ Logged in to LinkedIn after full context reset.")
+            return new_page, context
+
+            # If even this fails, you could optionally raise exception
+
+        except Exception as e:
+            logger.exception(f"⚠️ Login failed or already logged in: {e}")
+
+    return page, context  # Fallback safety    
 
 def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
-    print(f"📜 Scrolling until at least {min_cards} job cards are visible...")
+    logger.info(f"📜 Scrolling until at least {min_cards} job cards are visible...")
 
     # Dynamically detect the scrollable container holding job cards
     scroll_selector = page.evaluate("""
@@ -199,29 +306,29 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
 
 
     if not scroll_selector:
-        print("❌ Scroll container NOT found.")
-        return
+        logger.critical("❌ Scroll container NOT found.")
+        return False  # Signal failure to the caller
 
     #print(f"✅ Using scroll container: {scroll_selector}")
 
     last_card_count = -1
     stagnant_scrolls = 0
-    max_stagnant_scrolls = 5
+    max_stagnant_scrolls = 3
 
     for i in range(max_scrolls):
         job_cards = page.locator(".job-card-container--clickable")
         total_cards = job_cards.count()
-        print(f"🔄 Scroll {i + 1}: {total_cards} job cards found.")
+        logger.debug(f"🔄 Scroll {i + 1}: {total_cards} job cards found.")
 
         if total_cards >= min_cards:
-            print(f"✅ Loaded {total_cards} job cards.")
+            logger.info(f"✅ Loaded {total_cards} job cards.")
             break
 
         if total_cards == last_card_count:
             stagnant_scrolls += 1
-            print(f"⚠️ No new cards detected ({stagnant_scrolls}/{max_stagnant_scrolls})")
+            logger.warning(f"⚠️ No new cards detected ({stagnant_scrolls}/{max_stagnant_scrolls})")
             if stagnant_scrolls >= max_stagnant_scrolls:
-                print("🛑 Stopping — content stopped loading.")
+                logger.info("🛑 Stopping — content stopped loading.")
                 break
         else:
             stagnant_scrolls = 0
@@ -240,111 +347,328 @@ def scroll_job_list_panel(page, min_cards=25, max_scrolls=20, delay=4):
         page.wait_for_timeout(delay * 1000)
 
     else:
-        print(f"⚠️ Max scrolls reached but only {total_cards} job cards found.")
+        logger.warning(f"⚠️ Max scrolls reached but only {total_cards} job cards found.")
 
-def scrape_jobs(keyword, location, max_count=5):
+    return True  # signal success to the caller    
+
+def scrape_jobs(page, context, keyword, location, max_count=5):
     jobs = []
-    start = 0  # pagination offset, increases by 25 for each page
-    global_job_index = 1  # Global counter across pages
+    start = 0                  # pagination offset, increases by 25 for each page
+    global_job_index = 1
+    consecutive_empty_pages = 0
+    max_empty_pages = 2        # After this many empty pages, move to next keyword
 
-    launch_chrome_debug()  # ✅ THIS STARTS CHROME BEFORE CONNECTING TO CDP
+    with tqdm(total=max_count if max_count else 0, desc="Processing Jobs", unit="job") as progress:
+        while True:
+            if max_count is not None and len(jobs) >= max_count:
+                logger.info("✅ Reached max job count.")
+                break
 
-    with sync_playwright() as p:
-        browser = p.chromium.connect_over_cdp("http://localhost:9222")
-        context = browser.contexts[0]
-        page = context.new_page()
+            if consecutive_empty_pages >= max_empty_pages:
+                logger.info(f"⚠️ {consecutive_empty_pages} empty pages in a row. Moving on.")
+                break
 
-        login_linkedin(page)
+            paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
+            
+            # ✅ Enhanced navigation + refresh fallback + smart screenshot
+            nav_attempts = 0
+            max_nav_retries = 1
+            nav_success = False
 
-        try:
-            with tqdm(total=max_count if max_count else 0, desc="🔍 Scraping Jobs", unit="job") as progress:
-                while True:
-                    if max_count is not None and len(jobs) >= max_count:
-                        print("✅ Reached max job count.")
-                        break
-                    seen_indices = set()
-                    paged_url = f"https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}&start={start}&f_TPR=r{time_filter}&f_WT=1%2C1%2C3"
-                    print(f"🌐 Visiting: {paged_url}")
-                    page.goto(paged_url)
-                    page.wait_for_timeout(10000)  # Wait for job list to load
+            while nav_attempts <= max_nav_retries:
+                try:
+                    logger.info(f"🌐 Visiting: {paged_url} (Attempt {nav_attempts + 1})")
+                    page.goto(paged_url, wait_until="domcontentloaded", timeout=15000)
 
-                    scroll_job_list_panel(page, min_cards=25, delay=4)
-
+                    # Ensure cards are loaded
+                    if not page.locator(".job-card-container--clickable").first.is_visible(timeout=5000):
+                        raise Exception("Job card panel not visible after page load.")
+                    
+                    # ✅ After successful load, extra check for no results
                     try:
-                        page.wait_for_selector(".job-card-container--clickable", timeout=5000)
+                        body_text = page.inner_text("body").lower()
+                        if "no matching jobs found" in body_text or "try different filters" in body_text or "search again" in body_text:
+                            logger.info(f"✅ No matching jobs found at offset {start}. End of results.")
+                            break  # 🔥 Exit scrape loop immediately
+                    except Exception as e:
+                        logger.warning(f"⚠️ Could not check for end of results: {e}")
+
+                    nav_success = True
+                    break
+
+                except Exception as e:
+                    logger.warning(f"⚠️ Navigation/visibility failed on attempt {nav_attempts + 1}: {e}")
+
+                    # Try refresh after first failure
+                    if nav_attempts == 0:
+                        logger.info("🔄 Refreshing page and retrying...")
+                        try:
+                            page.reload(wait_until="domcontentloaded", timeout=7000)
+                        except:
+                            logger.warning("⚠️ Page reload failed.")
+
+                    page.wait_for_timeout(5000)
+                    nav_attempts += 1
+
+            if not nav_success:
+                logger.error(f"❌ Navigation failed after {max_nav_retries + 1} attempts: {paged_url}")
+                try:
+                    no_results_text = page.inner_text("body").lower()
+                    if (
+                        "no matching jobs" in no_results_text
+                        or "try different keywords" in no_results_text
+                        or page.locator(".job-card-container--clickable").count() == 0
+                    ):
+                        logger.info("⛔ Reached end of results — skipping screenshot.")
+                    else:
+                        logger.info("📸 Navigation failed unexpectedly — taking screenshot.")
+                        screenshot_path = os.path.join(SCREENSHOT_FOLDER, f"nav_uncertain_{keyword}_{location}_{start}.png")
+                        page.screenshot(path=screenshot_path)
+
+                except Exception as e:
+                    logger.warning(f"⚠️ Could not determine end-of-results status: {e}")
+                    try:
+                        screenshot_path = os.path.join(SCREENSHOT_FOLDER, f"nav_uncertain_{keyword}_{location}_{start}.png")
+                        page.screenshot(path=screenshot_path)
                     except:
-                        print("⚠️ Job cards not found after scroll, skipping page.")
-                        start += 25
+                        pass
+
+                break
+
+            if not scroll_job_list_panel(page, min_cards=25, delay=4):
+                logger.warning("⚠️ Scrolling failed. Skipping.")
+                consecutive_empty_pages += 1
+                start += 25
+                continue
+
+            try:
+                page.wait_for_selector(".job-card-container--clickable", timeout=5000)
+            except:
+                logger.warning("⚠️ Job cards not found. Skipping page.")
+                consecutive_empty_pages += 1
+                start += 25
+                continue
+
+            job_cards = page.locator(".job-card-container--clickable")
+            total_cards = job_cards.count()
+            logger.info(f"📄 Found {total_cards} job cards.")
+
+            if total_cards == 0:
+                logger.warning("🚫 No job cards found.")
+                consecutive_empty_pages += 1
+                start += 25
+                continue
+
+            logger.info("✅ Beginning to process job cards...")
+            match_count = 0
+            seen_titles = set()  # Track visible job titles seen on this page
+
+            for i in range(total_cards):
+                if max_count is not None and len(jobs) >= max_count:
+                    logger.info("✅ Reached max job count.")
+                    return jobs
+
+                try:
+                    card = job_cards.nth(i)
+
+                    if not card.is_visible(timeout=3000):
+                        logger.debug(f"⚠️ Card {i} not visible. Skipping.")
                         continue
 
-                    job_cards = page.locator(".job-card-container--clickable")
-                    total_cards = job_cards.count()
+                    try:
+                        card_text = card.inner_text(timeout=3000)
+                        logger.info(f"🔍 Job card #{i + 1} content:\n{card_text}")
 
-                    #print(f"📄 Found {total_cards} job cards on page offset {start}.")
-
-                    if total_cards == 0:
-                        print("🚫 No more job cards found. Ending scrape.")
-                        break
-
-                    for i in range(total_cards):
-                        if max_count is not None and len(jobs) >= max_count:
-                            print("✅ Reached max job count.")
-                            return jobs
-
-                        if i in seen_indices:
+                        if not card_text or len(card_text.strip()) == 0:
+                            logger.warning(f"⚠️ Card {i} had no visible text. Skipping.")
                             continue
 
-                        seen_indices.add(i)
+                        job_title_lines = card_text.strip().split("\n")
+                        job_title = re.sub(r"\s+", " ", job_title_lines[0]).strip().lower()
+                        seen_titles.add(job_title)
 
-                        try:
-                            print(f"🔄 Clicking on job card #{i + 1}")
-                            job_cards.nth(i).click()
-                            page.wait_for_timeout(3000)
+                    except Exception as e:
+                        logger.warning(f"⚠️ Could not extract visible title for card {i}: {e}")
+                        continue
 
-                            job = extract_job_details(page)
+                    logger.debug(f"🔍 Matching '{keyword}' in title: '{job_title}'")
 
-                            # 🔍 Match against FILTER_KEYWORDS list
-                            job_title_text = job.get("Job Title", "").lower()
-                            if keyword.lower() in job_title_text:
-                                jobs.append(job)
-                                print(f"✅ [{global_job_index}] {job['Job Title']} at {job['Company Name']}")
-                                global_job_index += 1
-                                progress.update(1)
-                            else:
-                                print(f"⏭️ Skipped: '{job['Job Title']}' — does not match keyword: '{keyword}'")
+                    # Multi-word substring matching
+                    current_keyword = keyword.lower()
+                    keyword_words = re.split(r'\s+', current_keyword)  # Split keyword into words
+                    all_words_present = True
 
-                        except Exception as e:
-                            print(f"❌ Error processing job card #{i + 1} on page offset {start}: {e}")
+                    for word in keyword_words:
+                        if word not in job_title:
+                            all_words_present = False
+                            break
 
-                    start += 25  # move to next page
+                    if not all_words_present:
+                        logger.debug(f"❌ No match for keyword '{keyword}' — skipping card {i + 1}")
+                        continue
 
-        finally:
-            context.close()
-            browser.close()
+                    logger.info(f"👉 Match Found - Clicking job card #{i + 1}: '{job_title}'")
+                    card.click()
+                    page.wait_for_timeout(5000)
 
+                    job = extract_job_details(page, location, keyword)
+                    jobs.append(job)
+                    logger.info(f"✅ [{global_job_index}] {job['Job Title']} at {job['Company Name']}")
+                    global_job_index += 1
+                    progress.update(1)
+                    match_count += 1
+
+                except Exception as e:
+                    logger.exception(f"❌ Error processing job card #{i + 1}: {e}")
+                    try:
+                        screenshot_path = os.path.join(SCREENSHOT_FOLDER, f"nav_uncertain_{keyword}_{location}_{start}.png")
+                        page.screenshot(path=screenshot_path)
+                    except:
+                        pass
+
+            # NEW: Handle empty page detection based on job titles
+            if len(seen_titles) == 0:
+                consecutive_empty_pages += 1
+                logger.info(f"⚠️ No new job titles seen — possible end of listings ({consecutive_empty_pages}/{max_empty_pages})")
+            else:
+                consecutive_empty_pages = 0
+
+            start += 25
+    
     return jobs
 
-def save_jobs(jobs, job_title, job_location):
+RESUME_FILE = "resume_state.json"
+
+def save_resume_point(combo_counter, keyword, location):
+    """Save the current scraping state to resume later."""
+    state = {
+        "combo_counter": combo_counter,
+        "keyword": keyword,
+        "location": location
+    }
+    try:
+        with open(RESUME_FILE, "w") as f:
+            json.dump(state, f)
+        logger.info(f"💾 Saved resume point at combo #{combo_counter}: '{keyword}' in '{location}'")
+    except Exception as e:
+        logger.warning(f"⚠️ Failed to save resume point: {e}")
+
+def load_resume_point():
+    """Load previously saved resume point if available."""
+    if os.path.exists(RESUME_FILE):
+        try:
+            with open(RESUME_FILE, "r") as f:
+                state = json.load(f)
+                logger.info(f"🔄 Found resume point: combo #{state['combo_counter']} at '{state['keyword']}' / '{state['location']}'")
+                return state
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to load resume point: {e}")
+    return None
+
+def delete_resume_point():
+    """Delete resume file after complete scraping."""
+    if os.path.exists(RESUME_FILE):
+        try:
+            os.remove(RESUME_FILE)
+            logger.info("🧹 Deleted resume file after successful complete scraping.")
+        except Exception as e:
+            logger.warning(f"⚠️ Failed to delete resume file: {e}")
+
+def handle_resume_decision():
+    """If resume file exists, ask user if they want to resume or start fresh, with timeout."""
+    if os.path.exists(RESUME_FILE):
+        user_choice = {"answer": None}
+
+        def ask_input():
+            choice = input("\n🛑 Previous incomplete scrape detected.\nWould you like to (R)esume or (F)resh start? [R/F] (auto-fresh in 10s): ").strip().lower()
+            user_choice["answer"] = choice
+
+        input_thread = threading.Thread(target=ask_input)
+        input_thread.daemon = True
+        input_thread.start()
+        input_thread.join(timeout=10)
+
+        choice = user_choice["answer"]
+
+        if choice == "r":
+            logger.info("🔄 Resuming previous scrape...")
+            return load_resume_point()
+        elif choice == "f":
+            logger.info("🧹 Starting fresh as selected by user...")
+            delete_resume_point()
+            return None
+        else:
+            logger.warning("⚡ No input received — starting fresh automatically after 10 seconds.")
+            delete_resume_point()
+            return None
+    else:
+        return None
+
+SCREENSHOT_FOLDER = "screenshots"
+def ensure_screenshot_folder():
+    if not os.path.exists(SCREENSHOT_FOLDER):
+        os.makedirs(SCREENSHOT_FOLDER)
+
+OUTPUT_FOLDER = "output"
+def ensure_output_folder():
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
+
+def save_jobs(jobs, filename=None):
+    """Save jobs to XLSX"""
     if not jobs:
-        print("⚠️ No jobs to save.")
-        return
-
-    date_str = datetime.now().strftime("%d-%m-%Y")
-    filename = f"linkedin_jobs_{date_str}.csv"
+        logger.warning("⚠️ No jobs to save.")
+        return filename
     
-    # Avoid overwriting if run multiple times
-    if os.path.exists(filename):
-        time_str = datetime.now().strftime("%H-%M-%S")
-        filename = f"linkedin_jobs_{date_str}_{time_str}.csv"
+    ensure_output_folder()  # Ensure output/ exists
 
-    keys = jobs[0].keys()
-    print(f"[INFO] Saving to {filename} with keys: {list(keys)}")
-    with open(filename, "w", newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=keys)
-        writer.writeheader()
-        writer.writerows(jobs)
+    # Create dated folder inside output
+    date_folder = datetime.now().strftime("%Y-%m-%d")
+    full_output_dir = os.path.join(OUTPUT_FOLDER, date_folder)
+    os.makedirs(full_output_dir, exist_ok=True)
 
-    print(f"✅ Saved {len(jobs)} jobs to {filename}")
+    if filename is None:
+        timestamp = datetime.now().strftime("%d-%m-%Y_%H%M")
+        filename = os.path.join(full_output_dir, f"linkedin_jobs_{timestamp}.xlsx")
+    
+    df = pd.DataFrame(jobs)
+    df.to_excel(filename, index=False, engine="openpyxl")
+    
+    logger.info(f"💾 Saved {len(jobs)} jobs to {filename}")
+    return filename
+
+def save_jobs_periodic(jobs, interval_minutes=10):
+    """Track time and periodically save jobs"""
+    current_time = time.time()
+    
+    # Initialize static variables if needed
+    if not hasattr(save_jobs_periodic, "last_save_time"):
+        save_jobs_periodic.last_save_time = current_time
+        save_jobs_periodic.filename = None
+    
+    # If enough time has passed or it's the first save
+    if current_time - save_jobs_periodic.last_save_time >= interval_minutes * 60:
+        if jobs:
+            save_jobs_periodic.filename = save_jobs(jobs, save_jobs_periodic.filename)
+            logger.info(f"⏱️ Auto-saved at {datetime.now().strftime('%H:%M:%S')}")
+            save_jobs_periodic.last_save_time = current_time
+        return save_jobs_periodic.filename
+    
+def rename_file_complete(filename):
+    """Rename the file to indicate the scraping completed successfully"""
+    if not filename or not os.path.exists(filename):
+        return
+        
+    base, ext = os.path.splitext(filename)
+    new_filename = f"{base}_COMPLETE{ext}"
+    
+    try:
+        os.rename(filename, new_filename)
+        logger.info(f"✅ Renamed file to {new_filename} to indicate complete scraping")
+        return new_filename
+    except Exception as e:
+        logger.exception(f"❌ Failed to rename file: {e}")
+        return filename    
 
 def get_time_filter():
     days = input("Enter number of days (e.g., 1 for past 24 hours): ")
@@ -360,17 +684,109 @@ def get_job_count():
     else:
         return None  # Run indefinitely until no more jobs are found
 
+def ensure_page_alive(page, context, browser, combo_counter=None, revalidate_every=5):
+    """Ensure page and context are alive. Revalidate login every N combos."""
+    try:
+        if page.is_closed():
+            logger.warning("⚠️ Page was closed. Reopening a new one.")
+            page = context.new_page()
+
+        if combo_counter is not None and combo_counter % revalidate_every == 0:
+            logger.info(f"🔁 Session checkpoint at combo #{combo_counter} — validating login")
+            page, context = login_linkedin(page, context, browser)
+
+    except Exception as e:
+        logger.error(f"❌ Unexpected error while ensuring page/context health: {e}")
+        try:
+            context.close()
+        except:
+            pass
+        context = browser.new_context()
+        page = context.new_page()
+        page, context = login_linkedin(page, context, browser)
+
+    return page, context
 
 if __name__ == "__main__":
     time_filter = 86400  # Past 1 day
     job_count = None     # No cap per combo
 
     all_jobs = []
+    save_interval = 10  # Save every 10 minutes
+    filename = None
+    ensure_screenshot_folder()
 
-    for keyword in FILTER_KEYWORDS:
-        for location in LOCATIONS:
-            print(f"\n🔎 Scraping for keyword '{keyword}' in '{location}'")
-            jobs = scrape_jobs(keyword, location, max_count=job_count)
-            all_jobs.extend(jobs)
+    try:
+        launch_chrome_debug()
 
-    save_jobs(all_jobs, "combined", "all_locations")
+        with sync_playwright() as p:
+            browser = p.chromium.connect_over_cdp("http://localhost:9222")
+            context = browser.contexts[0] if browser.contexts else browser.new_context()
+            page = context.new_page()
+            page, context = login_linkedin(page, context, browser)
+
+            resume_state = handle_resume_decision()
+            combo_counter = 0
+            resumed = False
+
+            for keyword in FILTER_KEYWORDS:
+                for location in LOCATIONS:
+                    combo_counter += 1
+
+                    if resume_state and not resumed:
+                        if (
+                            combo_counter < resume_state["combo_counter"]
+                            or (combo_counter == resume_state["combo_counter"]
+                                and (keyword != resume_state["keyword"] or location != resume_state["location"]))
+                        ):
+                            logger.info(f"⏭️ Skipping combo #{combo_counter}: '{keyword}' in '{location}' (already completed)")
+                            continue
+                        else:
+                            logger.info(f"🔄 Resuming from combo #{combo_counter}: '{keyword}' in '{location}'")
+                            resumed = True
+                    
+                    current_keyword = keyword
+                    current_location = location
+
+                    logger.info(f"\n🔎 Scraping for keyword '{keyword}' in '{location}'")
+
+                    page, context = ensure_page_alive(page, context, browser, combo_counter, revalidate_every=5)
+                    
+                    try:
+                        jobs = scrape_jobs(page, context, keyword, location, max_count=job_count)
+                        all_jobs.extend(jobs)
+                
+                        # Periodically save after each keyword-location combination
+                        filename = save_jobs_periodic(all_jobs, save_interval)
+
+                        # 💾 Save successful resume point after combo is done
+                        save_resume_point(combo_counter, keyword, location)
+                    
+                    except Exception as combo_error:
+                        logger.exception(f"❌ Error scraping combo #{combo_counter}: '{current_keyword}' in '{current_location}'. Skipping to next combo...")
+                        continue  # or break or continue depending on what you want    
+        
+        # Final save at the end
+        filename = save_jobs(all_jobs, filename)
+        
+        # Rename the file to indicate complete scraping
+        rename_file_complete(filename)
+
+        # Now delete the resume file
+        delete_resume_point()
+        logger.info("✅ Scraping completed successfully!")        
+        
+    except KeyboardInterrupt:
+        logger.warning("\n\n⚠️ Stopping the bot due to keyboard interrupt (Ctrl+C)...")
+        if all_jobs:
+            save_jobs(all_jobs, filename)
+            logger.info("✅ Jobs saved successfully (without COMPLETE marker)!")
+        else:
+            logger.info("ℹ️ No jobs were collected to save.")
+    except Exception as e:
+        logger.exception(f"\n❌ An error occurred: {e}")
+        if all_jobs:
+            save_jobs(all_jobs, filename)
+            logger.info("✅ Jobs saved successfully despite error (without COMPLETE marker)!")
+
+#upload_to_drive(filename)

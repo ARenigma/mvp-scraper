@@ -540,9 +540,7 @@ def get_job_count():
 if __name__ == "__main__":
     time_filter = 86400  # Past 1 day
     job_count = None     # No cap per combo
-
     all_jobs = []
-
     save_interval = 10  # Save every 10 minutes
     filename = None
 
