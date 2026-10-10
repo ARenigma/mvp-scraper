@@ -1,1 +1,11 @@
 linkedin_cookies.json
+
+# secrets / data removed in history cleanup
+.env
+gdrive_key.json
+Gemini API.txt
+linkedin_state.json
+storage_state.json
+output/
+linkedin_jobs_*.csv
+venv/
